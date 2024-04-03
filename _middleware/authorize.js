@@ -1,5 +1,5 @@
 const jwt = require('express-jwt');
-const {secret} = require('config.json');
+const { secret } = require('../config.json');
 const db = require('_helpers/db');
 
 module.exports = authorize;
@@ -13,7 +13,7 @@ function authorize(roles = []) {
 
     return [
         //authenticate JWT token and attach user to request object (req.user)
-        jwt({ secret, algorithms: ['HS256']}),
+        jwt.expressjwt({ secret, algorithms: ['HS256'] }),
 
         //authorize based on user role
         async (req, res, next) => {
@@ -27,7 +27,7 @@ function authorize(roles = []) {
             //authentication and authorization successful
             req.user.role = account.role;
             const refreshTokens = await account.getRefreshTokens();
-            req.user.ownsTolem = token => !!refreshTokens.find(x => x.token === token);
+            req.user.ownsToken = token => !!refreshTokens.find(x => x.token === token);
             next();
         }
     ];
