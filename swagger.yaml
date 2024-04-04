@@ -1,4 +1,4 @@
-openapi: 3.0.3
+openapi: 3.0.0
 info:
   title: Node.js Sign-up and Verification API
   description: Node.js + MySQL - API with email sign-up, verification, authentication and forgot password
