@@ -17,7 +17,7 @@ function authorize(roles = []) {
 
         //authorize based on user role
         async (req, res, next) => {
-            const account = await db.Account.findbyPk(req.auth.id);
+            const account = await db.Account.findByPk(req.auth.id);
 
             if(!account || (roles.length && !roles.includes(account.role))) {
                 //account no longer exists or role not authorized

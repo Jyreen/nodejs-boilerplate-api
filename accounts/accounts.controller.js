@@ -104,7 +104,7 @@ function verifyEmailSchema(req, res, next) {
 }
 
 function verfiyEmail(req, res, next) {
-    accountService.verfiyEmail(req.body) 
+    accountService.verifyEmail(req.body) 
         .then(() => res.json({ message: 'Verification successful, you can now login'}))
         .catch(next);
 }
@@ -223,7 +223,7 @@ function _delete(req, res,next) {
     }
 
     accountService.update(req.params.id)
-        .then(account => res.json({ message: 'Account deleted successfully' }))
+        .then(()=> res.json({ message: 'Account deleted successfully' }))
         .catch(next);
 }
 

@@ -109,7 +109,7 @@ async function verifyEmail({ token }) {
     
     account. verified = Date.now( );
     account. verificationToken = null;
-    await account, save();
+    await account.save();
 }
 
 async function forgotPassword({ email }, origin) {
@@ -128,10 +128,10 @@ async function forgotPassword({ email }, origin) {
 }
 
 async function validateResetToken ({ token }) {
-    const account = await db.Account. findOne({
+    const account = await db.Account.findOne({
          where: {
             resetToken: token,
-            resetTokenExpires: { [Op-gt]: Date.now() }
+            resetTokenExpires: { [Op.gt]: Date.now() }
         }
     });
 
@@ -238,7 +238,7 @@ function generateRefreshToken(account, ipAddress) {
 }
     
 function randomTokenString() {
-    return crypto. randomBytes (40).toString( 'hex');
+    return crypto.randomBytes(40).toString('hex');
 }
     
 function basicDetails (account) {
@@ -249,21 +249,21 @@ function basicDetails (account) {
 async function sendVerificationEmail(account, origin) {
     let message;
     if (origin) {
-    const verifyUrl = `${origin}/account/verify-email?token=${account.verificationToken}`;
-    message = `<p>Please click the below link to verify your email address:</p>
-                        <p><a href="${verifyUrl}">${verifyUrl}</a></p>`;
+        const verifyUrl = `${origin}/account/verify-email?token=${account.verificationToken}`;
+        message = `<p>Please click the below link to verify your email address:</p>
+                            <p><a href="${verifyUrl}">${verifyUrl}</a></p>`;
     } else {
-    message = `<p>Please use the below token to verify your email address with the <code>/account/verify-email</code> api route:</p>
-    <p><code>${account.verificationToken}</code></p›`;
+        message = `<p>Please use the below token to verify your email address with the <code>/account/verify-email</code> api route:</p>
+        <p><code>${account.verificationToken}</code></p›`;
     }
     
     await sendEmail({
       to: account.email,
-      subject: `Sign-up Verification API - Verify Email`,
+      subject: 'Sign-up Verification API - Verify Email',
       html: `<h4>Verify Email</h4>
-                <p>Thanks for registering!</p>
+                <p>Thanks for registering!</p>  
                 ${message}`
-       });
+    });
 }
 
 async function sendAlreadyRegisteredEmail (email, origin) {
@@ -278,11 +278,11 @@ async function sendAlreadyRegisteredEmail (email, origin) {
     
     await sendEmail({
       to: email,
-      subject: `Sign-up Verification API - Email Already Registered`,
+      subject: 'Sign-up Verification API - Email Already Registered',
       html: `<h4>Email Already Registered</h4>
                <p>Your email <strong>${email}</strong> is already registered.</p>
                ${message}`
-      }) ;
+    }) ;
 }
 
 async function sendPasswordResetEmail (account, origin) {
@@ -298,10 +298,10 @@ async function sendPasswordResetEmail (account, origin) {
     
     await sendEmail({
       to: account.email,
-      subject: `Sign-up Verification API - Reset Password`,
+      subject: 'Sign-up Verification API - Reset Password',
       html:`<h4>Reset Password Email</h4>
         ${message}`
     
-     });
+    });
 }
     
